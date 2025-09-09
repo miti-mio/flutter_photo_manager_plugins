@@ -143,7 +143,8 @@ class AssetEntityImageProvider extends ImageProvider<AssetEntityImageProvider> {
               progressHandler: progressHandler,
             );
             // data = await file?.readAsBytes();
-            print('[AssetEntityImageProvider], ios source file path: ${file?.path}, "aaaa" ,${key.entity.relativePath}');
+            final file2 = await key.entity.file;
+            print('[AssetEntityImageProvider], ios source file path: ${file?.path}, "aaaa" ,${key.entity.relativePath}, file2, ${file2?.path}');
             if (file == null) {
               throw StateError('The file is null: $entity');
             }
