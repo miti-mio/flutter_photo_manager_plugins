@@ -138,17 +138,18 @@ class AssetEntityImageProvider extends ImageProvider<AssetEntityImageProvider> {
               progressHandler: progressHandler,
             );
           } else {
-            final file = await key.entity.loadFile(
-              isOrigin: imageType != ImageFileType.heic,
-              progressHandler: progressHandler,
-            );
-            // data = await file?.readAsBytes();
-            final file2 = await key.entity.file;
-            print('[AssetEntityImageProvider], ios source file path: ${file?.path}, "aaaa" ,${key.entity.relativePath}, file2, ${file2?.path}');
-            if (file == null) {
-              throw StateError('The file is null: $entity');
+            final entityFile = await key.entity.file;
+            print("[_loadAsync] entityFile: ${entityFile != null}");
+            if (entityFile != null) {
+              return decode(
+                  await ui.ImmutableBuffer.fromFilePath(entityFile.path));
+            } else {
+              final file = await key.entity.loadFile(
+                isOrigin: imageType != ImageFileType.heic,
+                progressHandler: progressHandler,
+              );
+              data = await file?.readAsBytes();
             }
-            return decode(await ui.ImmutableBuffer.fromFilePath(file!.path));
           }
         } else {
           data = await key.entity.thumbnailDataWithOption(
