@@ -138,18 +138,11 @@ class AssetEntityImageProvider extends ImageProvider<AssetEntityImageProvider> {
               progressHandler: progressHandler,
             );
           } else {
-            final entityFile = await key.entity.file;
-            print("[_loadAsync] entityFile: ${entityFile != null}");
-            if (entityFile != null) {
-              return decode(
-                  await ui.ImmutableBuffer.fromFilePath(entityFile.path));
-            } else {
-              final file = await key.entity.loadFile(
-                isOrigin: imageType != ImageFileType.heic,
-                progressHandler: progressHandler,
-              );
-              data = await file?.readAsBytes();
-            }
+            final file = await key.entity.loadFile(
+              isOrigin: imageType != ImageFileType.heic,
+              progressHandler: progressHandler,
+            );
+            data = await file?.readAsBytes();
           }
         } else {
           data = await key.entity.thumbnailDataWithOption(
@@ -300,7 +293,7 @@ class AssetEntityImage extends Image {
     AlignmentGeometry alignment = Alignment.center,
     ImageRepeat repeat = ImageRepeat.noRepeat,
     Rect? centerSlice,
-    bool matchTextDirection = false,
+    bool matchTextDirection = false，
     bool gaplessPlayback = false,
     bool isAntiAlias = false,
     FilterQuality filterQuality = FilterQuality.low,
