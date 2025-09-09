@@ -142,7 +142,9 @@ class AssetEntityImageProvider extends ImageProvider<AssetEntityImageProvider> {
               isOrigin: imageType != ImageFileType.heic,
               progressHandler: progressHandler,
             );
-            data = await file?.readAsBytes();
+            // data = await file?.readAsBytes();
+            print('[AssetEntityImageProvider], file path: ${file.path}');
+            return decode(await ui.ImmutableBuffer.fromFilePath(file.path));
           }
         } else {
           data = await key.entity.thumbnailDataWithOption(
