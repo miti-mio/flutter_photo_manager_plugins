@@ -143,8 +143,11 @@ class AssetEntityImageProvider extends ImageProvider<AssetEntityImageProvider> {
               progressHandler: progressHandler,
             );
             // data = await file?.readAsBytes();
-            print('[AssetEntityImageProvider], file path: ${file.path}');
-            return decode(await ui.ImmutableBuffer.fromFilePath(file.path));
+            print('[AssetEntityImageProvider], file path: ${file?.path}');
+            if (file == null) {
+              throw StateError('The file is null: $entity');
+            }
+            return decode(await ui.ImmutableBuffer.fromFilePath(file!.path));
           }
         } else {
           data = await key.entity.thumbnailDataWithOption(
